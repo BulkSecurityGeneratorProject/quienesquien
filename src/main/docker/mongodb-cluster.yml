@@ -1,0 +1,16 @@
+version: '2'
+services:
+    quienesquien-mongodb:
+        image: mongo:3.4.10
+        ports:
+            - "27017:27017"
+        command: mongos --configdb quienesquien-mongodb-config
+    quienesquien-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    quienesquien-mongodb-config:
+        image: mongo:3.4.10
+        container_name: quienesquien-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db

@@ -1,0 +1,20 @@
+version: '2'
+services:
+    quienesquien-app:
+        image: quienesquien
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATA_MONGODB_URI=mongodb://quienesquien-mongodb:27017
+            - SPRING_DATA_MONGODB_DATABASE=quienesquien
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=quienesquien-elasticsearch:9300
+        ports:
+            - 8080:8080
+    quienesquien-mongodb:
+        extends:
+            file: mongodb.yml
+            service: quienesquien-mongodb
+    quienesquien-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: quienesquien-elasticsearch
